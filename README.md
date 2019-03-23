@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-
 # Laravel Countries
 
 Laravel Countries is a bundle for Laravel, providing Almost ISO 3166_2, 3166_3, currency, Capital and more for all countries.
