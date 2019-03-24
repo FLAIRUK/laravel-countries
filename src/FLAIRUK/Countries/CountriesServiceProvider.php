@@ -1,6 +1,6 @@
 <?php
 
-namespace Webpatser\Countries;
+namespace FLAIRUK\Countries;
 
 use Illuminate\Support\ServiceProvider;
 

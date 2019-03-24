@@ -1,6 +1,6 @@
 <?php
 
-namespace Webpatser\Countries;
+namespace FLAIRUK\Countries;
 
 use Illuminate\Console\Command;
 
@@ -31,7 +31,7 @@ class MigrationCommand extends Command {
         $app = app();
         $app['view']->addNamespace('countries',substr(__DIR__,0,-8).'views');
     }
-    
+
     /**
      * Execute the console command.
      *
@@ -131,7 +131,7 @@ class MigrationCommand extends Command {
 
         return true;
     }
-    
+
     /**
      * BC for older laravel versions
      */
