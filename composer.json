@@ -41,7 +41,7 @@
         "flairuk\\Countries\\CountriesServiceProvider"
       ],
       "aliases": {
-        "Countries": "flairuk\\Countries\\CountriesFacade"
+        "Countries": "FLAIRUK\\Countries\\CountriesFacade"
       }
     }
   },
