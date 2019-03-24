@@ -38,10 +38,10 @@
   "extra": {
     "laravel": {
       "providers": [
-        "flairuk\\Countries\\CountriesServiceProvider"
+        "FLAIRUK\\Countries\\CountriesServiceProvider"
       ],
       "aliases": {
-        "Countries": "flairuk\\Countries\\CountriesFacade"
+        "Countries": "FLAIRUK\\Countries\\CountriesFacade"
       }
     }
   },
