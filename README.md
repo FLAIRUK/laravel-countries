@@ -5,11 +5,17 @@
   </picture>
 </p>
 
-[![Tests](https://github.com/FLAIRUK/laravel-countries/actions/workflows/tests.yml/badge.svg)](https://github.com/FLAIRUK/laravel-countries/actions/workflows/tests.yml)
-[![Latest Stable Version](https://poser.pugx.org/flairuk/laravel-countries/v/stable)](https://packagist.org/packages/flairuk/laravel-countries)
-[![License](https://poser.pugx.org/flairuk/laravel-countries/license)](https://packagist.org/packages/flairuk/laravel-countries)
+<h2 align="center">
+  <a href="https://www.php.net/" target="_blank"><img src="https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=flat&logo=php&logoColor=white" alt="PHP 8.2+"></a>&nbsp;
+  <a href="https://laravel.com/docs/" target="_blank"><img src="https://img.shields.io/badge/Laravel-12%20%7C%2013-FF2D20?style=flat&logo=laravel&logoColor=white" alt="Laravel 12 or 13"></a>&nbsp;
+  <a href="https://github.com/FLAIRUK/laravel-countries/actions/workflows/tests.yml" target="_blank"><img src="https://img.shields.io/github/actions/workflow/status/FLAIRUK/laravel-countries/tests.yml?branch=master&style=flat&logo=githubactions&logoColor=white&label=Tests" alt="Tests"></a>&nbsp;
+  <a href="https://packagist.org/packages/flairuk/laravel-countries" target="_blank"><img src="https://img.shields.io/packagist/dt/flairuk/laravel-countries?style=flat&logo=packagist&logoColor=white&label=Downloads&color=F28D1A" alt="Downloads on Packagist"></a>&nbsp;
+  <a href="https://github.com/FLAIRUK/laravel-countries/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/FLAIRUK/laravel-countries?style=flat&label=License&color=3DA639" alt="MIT licence"></a>&nbsp;
+  <a href="https://www.iso.org/iso-3166-country-codes.html" target="_blank"><img src="https://img.shields.io/badge/Data-ISO%203166-15803D?style=flat" alt="ISO 3166"></a>&nbsp;
+  <br>&nbsp;
+</h2>
 
-All 249 ISO 3166 countries for Laravel 12 and 13. Each country includes:
+**Laravel Countries** — All 249 ISO 3166 countries for Laravel 12 and 13. Each country includes:
 
 - alpha-2, alpha-3 and numeric codes
 - currency (ISO 4217 code, symbol, sub-unit, decimals)
@@ -26,7 +32,16 @@ What the package provides:
 - **Validation rule.** `CountryCode` accepts alpha-2, alpha-3 and/or numeric codes.
 - **Optional table.** Publish a migration and seed a `countries` table when other tables need to reference countries.
 
-## Installation
+<p align="center">
+  📦&nbsp;<a href="#-installation">Installation</a> ·
+  🚀&nbsp;<a href="#-usage">Usage</a> ·
+  💾&nbsp;<a href="#-database-table-optional">Database table</a> ·
+  🔄&nbsp;<a href="#-upgrading-from-dev-master">Upgrading</a>
+</p>
+
+<br><br>
+
+## 📦 Installation
 
 ```bash
 composer require flairuk/laravel-countries
@@ -34,7 +49,9 @@ composer require flairuk/laravel-countries
 
 Laravel discovers the service provider and the `Countries` facade automatically.
 
-## Usage
+<br><br>
+
+## 🚀 Usage
 
 ```php
 use FLAIRUK\Countries\Facades\Countries;
@@ -91,7 +108,9 @@ php artisan vendor:publish --tag=countries-flags
 
 `flagUrl()` returns `null` for the few newer territories without a bundled image: AX, BL, BQ, CW, GG, IM, JE, MF, RS, SS and SX.
 
-## Database table (optional)
+<br><br>
+
+## 💾 Database table (optional)
 
 ```bash
 php artisan countries:install         # publish config + migration, then migrate and seed
@@ -117,11 +136,13 @@ Country::usingCurrency('EUR')->pluck('name');
 
 The table name and connection come from `COUNTRIES_TABLE` and `COUNTRIES_DB_CONNECTION`, or from the published config. The primary key `id` is the ISO 3166 numeric code.
 
-## Upgrading from 1.x / dev-master
+<br><br>
+
+## 🔄 Upgrading from dev-master
 
 Version 2 is a rewrite. Breaking changes:
 
-| 1.x | 2.x |
+| dev-master | 1.0 |
 | --- | --- |
 | Facade `FLAIRUK\Countries\CountriesFacade` | `FLAIRUK\Countries\Facades\Countries` |
 | `Countries::getList($sort)` (array) | `Countries::all()->sortBy($sort)` (Collection of `Country`) |
@@ -143,7 +164,7 @@ Schema::table('countries', function (Blueprint $table) {
 });
 ```
 
-### Data corrections in 2.0
+### Data corrections in 1.0
 
 - **EEA membership:** the United Kingdom has left (Brexit). Iceland, Liechtenstein and Norway have been added. The list now has 30 members.
 - **Euro adoption:** Croatia (2023) and Bulgaria (2026) now use the euro. Euro symbols are fixed for Estonia, Latvia, Lithuania, Malta, Slovakia, Cyprus, Åland, Saint Barthélemy and Saint Martin.
@@ -152,12 +173,16 @@ Schema::table('countries', function (Blueprint $table) {
 - **Names:** Eswatini, North Macedonia, Czechia, Türkiye and Cabo Verde.
 - **Formatting:** whitespace is trimmed and empty values are `null`.
 
-## Testing
+<br><br>
+
+## 🧪 Testing
 
 ```bash
 composer test
 ```
 
-## License
+<br><br>
+
+## 📄 License
 
 MIT. See [LICENSE](LICENSE).
