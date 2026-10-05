@@ -11,7 +11,7 @@
   <a href="https://github.com/FLAIRUK/laravel-countries/actions/workflows/tests.yml" target="_blank"><img src="https://img.shields.io/badge/Lint-%E2%9C%93-2EA043?style=flat&logo=githubactions&logoColor=white" alt="Lint"></a>&nbsp;
   <a href="https://github.com/FLAIRUK/laravel-countries/actions/workflows/tests.yml" target="_blank"><img src="https://img.shields.io/badge/Tests-%E2%9C%93-2EA043?style=flat&logo=githubactions&logoColor=white" alt="Tests"></a>&nbsp;
   <a href="https://packagist.org/packages/flairuk/laravel-countries" target="_blank"><img src="https://img.shields.io/packagist/dt/flairuk/laravel-countries?style=flat&logo=packagist&logoColor=white&label=Downloads&color=F28D1A" alt="Downloads on Packagist"></a>&nbsp;
-  <a href="https://github.com/FLAIRUK/laravel-countries/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/FLAIRUK/laravel-countries?style=flat&label=License&color=3DA639" alt="MIT licence"></a>&nbsp;
+  <a href="https://github.com/FLAIRUK/laravel-countries/blob/main/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/FLAIRUK/laravel-countries?style=flat&label=License&color=3DA639" alt="MIT licence"></a>&nbsp;
   <a href="https://www.iso.org/iso-3166-country-codes.html" target="_blank"><img src="https://img.shields.io/badge/Data-ISO%203166-15803D?style=flat" alt="ISO 3166"></a>&nbsp;
   <br>&nbsp;
 </h2>
