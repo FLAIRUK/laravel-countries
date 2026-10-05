@@ -1,4 +1,9 @@
-# Laravel Countries
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="art/logo-dark.svg">
+    <img src="art/logo-light.svg" alt="Laravel Countries" width="420">
+  </picture>
+</p>
 
 [![Tests](https://github.com/FLAIRUK/laravel-countries/actions/workflows/tests.yml/badge.svg)](https://github.com/FLAIRUK/laravel-countries/actions/workflows/tests.yml)
 [![Latest Stable Version](https://poser.pugx.org/flairuk/laravel-countries/v/stable)](https://packagist.org/packages/flairuk/laravel-countries)
