@@ -8,7 +8,8 @@
 <h2 align="center">
   <a href="https://www.php.net/" target="_blank"><img src="https://img.shields.io/badge/PHP-8.2%2B-777BB4?style=flat&logo=php&logoColor=white" alt="PHP 8.2+"></a>&nbsp;
   <a href="https://laravel.com/docs/" target="_blank"><img src="https://img.shields.io/badge/Laravel-12%20%7C%2013-FF2D20?style=flat&logo=laravel&logoColor=white" alt="Laravel 12 or 13"></a>&nbsp;
-  <a href="https://github.com/FLAIRUK/laravel-countries/actions/workflows/tests.yml" target="_blank"><img src="https://img.shields.io/github/actions/workflow/status/FLAIRUK/laravel-countries/tests.yml?branch=master&style=flat&logo=githubactions&logoColor=white&label=Tests" alt="Tests"></a>&nbsp;
+  <a href="https://github.com/FLAIRUK/laravel-countries/actions/workflows/tests.yml" target="_blank"><img src="https://img.shields.io/badge/Lint-%E2%9C%93-2EA043?style=flat&logo=githubactions&logoColor=white" alt="Lint"></a>&nbsp;
+  <a href="https://github.com/FLAIRUK/laravel-countries/actions/workflows/tests.yml" target="_blank"><img src="https://img.shields.io/badge/Tests-%E2%9C%93-2EA043?style=flat&logo=githubactions&logoColor=white" alt="Tests"></a>&nbsp;
   <a href="https://packagist.org/packages/flairuk/laravel-countries" target="_blank"><img src="https://img.shields.io/packagist/dt/flairuk/laravel-countries?style=flat&logo=packagist&logoColor=white&label=Downloads&color=F28D1A" alt="Downloads on Packagist"></a>&nbsp;
   <a href="https://github.com/FLAIRUK/laravel-countries/blob/master/LICENSE" target="_blank"><img src="https://img.shields.io/github/license/FLAIRUK/laravel-countries?style=flat&label=License&color=3DA639" alt="MIT licence"></a>&nbsp;
   <a href="https://www.iso.org/iso-3166-country-codes.html" target="_blank"><img src="https://img.shields.io/badge/Data-ISO%203166-15803D?style=flat" alt="ISO 3166"></a>&nbsp;
@@ -140,14 +141,14 @@ The table name and connection come from `COUNTRIES_TABLE` and `COUNTRIES_DB_CONN
 
 ## 🔄 Upgrading from dev-master
 
-Version 2 is a rewrite. Breaking changes:
+Version 1.0 is a rewrite. Breaking changes:
 
 | dev-master | 1.0 |
 | --- | --- |
 | Facade `FLAIRUK\Countries\CountriesFacade` | `FLAIRUK\Countries\Facades\Countries` |
 | `Countries::getList($sort)` (array) | `Countries::all()->sortBy($sort)` (Collection of `Country`) |
 | `Countries::getOne($id)` | `Countries::find($id)` (numeric code) |
-| `Countries::getListForSelect()` | `Countries::options()` |
+| `Countries::getListForSelect($display)` (keyed by id) | `Countries::options('id', $display)` |
 | `php artisan countries:migration` | `php artisan countries:install` / `countries:seed` |
 | Config key `countries.table_name` | `countries.table` |
 | Keys `country-code`, `region-code`, `sub-region-code` | `numeric_code`, `region_code`, `sub_region_code` |
