@@ -48,6 +48,8 @@ What the package provides:
 composer require flairuk/laravel-countries
 ```
 
+Requires PHP 8.2 or later with Laravel 12, or PHP 8.3 or later with Laravel 13.
+
 Laravel discovers the service provider and the `Countries` facade automatically.
 
 <br><br>
@@ -114,7 +116,8 @@ php artisan vendor:publish --tag=countries-flags
 ## 💾 Database table (optional)
 
 ```bash
-php artisan countries:install         # publish config + migration, then migrate and seed
+php artisan countries:install             # publish config + migration, then ask to migrate and seed
+php artisan countries:install --migrate   # migrate and seed without asking
 php artisan countries:seed            # insert / update (safe to re-run)
 php artisan countries:seed --prune    # also delete rows no longer in the dataset
 ```
@@ -146,7 +149,7 @@ Version 1.0 is a rewrite. Breaking changes:
 | dev-master | 1.0 |
 | --- | --- |
 | Facade `FLAIRUK\Countries\CountriesFacade` | `FLAIRUK\Countries\Facades\Countries` |
-| `Countries::getList($sort)` (array) | `Countries::all()->sortBy($sort)` (Collection of `Country`) |
+| `Countries::getList($sort)` (array) | `Countries::all()->sortBy($property, SORT_NATURAL \| SORT_FLAG_CASE)` (Collection of `Country`; properties are camelCase, e.g. `countryCode`) |
 | `Countries::getOne($id)` | `Countries::find($id)` (numeric code) |
 | `Countries::getListForSelect($display)` (keyed by id) | `Countries::options('id', $display)` |
 | `php artisan countries:migration` | `php artisan countries:install` / `countries:seed` |
