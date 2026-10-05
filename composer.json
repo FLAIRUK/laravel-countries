@@ -1,52 +1,60 @@
 {
-  "name": "flairuk/laravel-countries",
-  "description": "Laravel Countries is a bundle for Laravel, providing Almost ISO 3166_2, 3166_3, currency, Capital and more for all countries.",
-  "authors": [
-    {
-      "name": "Phil Graham ",
-      "email": "phil.graham@ht2labs.com",
-      "homepage": "https://www.ht2labs.com/",
-      "role": "developer"
+    "name": "flairuk/laravel-countries",
+    "description": "ISO 3166 countries for Laravel: codes, currencies, calling codes, regions, EEA membership and flags, with a lookup API, validation rule and optional database table.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["laravel", "countries", "iso-3166", "currencies", "flags", "calling-codes"],
+    "homepage": "https://github.com/FLAIRUK/laravel-countries",
+    "authors": [
+        {
+            "name": "Phil Graham",
+            "homepage": "https://github.com/ijeffro",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "illuminate/console": "^12.0|^13.0",
+        "illuminate/database": "^12.0|^13.0",
+        "illuminate/support": "^12.0|^13.0",
+        "illuminate/validation": "^12.0|^13.0"
     },
-    {
-      "name": "Phil Graham",
-      "role": "developer"
-    }
-  ],
-  "keywords": [
-    "laravel",
-    "countries",
-    "iso_3166_2",
-    "iso_3166_3"
-  ],
-  "homepage": "https://github.com/flairuk/laravel-countries",
-  "license": [
-    "MIT"
-  ],
-  "require": {
-    "php": ">=5.3.0"
-  },
-  "autoload": {
-    "psr-0": {
-      "FLAIRUK\\Countries": "src/"
+    "require-dev": {
+        "laravel/pint": "^1.18",
+        "orchestra/testbench": "^10.0|^11.0",
+        "phpunit/phpunit": "^11.5|^12.0|^13.0"
     },
-    "classmap": [
-      "src/commands"
-    ]
-  },
-  "minimum-stability": "dev",
-  "extra": {
-    "laravel": {
-      "providers": [
-        "FLAIRUK\\Countries\\CountriesServiceProvider"
-      ],
-      "aliases": {
-        "Countries": "FLAIRUK\\Countries\\CountriesFacade"
-      }
+    "autoload": {
+        "psr-4": {
+            "FLAIRUK\\Countries\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "FLAIRUK\\Countries\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "format": "pint"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "FLAIRUK\\Countries\\CountriesServiceProvider"
+            ],
+            "aliases": {
+                "Countries": "FLAIRUK\\Countries\\Facades\\Countries"
+            }
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "support": {
+        "source": "https://github.com/FLAIRUK/laravel-countries",
+        "issues": "https://github.com/FLAIRUK/laravel-countries/issues"
     }
-  },
-  "support": {
-    "source": "https://github.com/flairuk/laravel-countries",
-    "issues": "https://github.com/flairuk/laravel-countries/issues"
-  }
 }

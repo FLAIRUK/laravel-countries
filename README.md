@@ -1,35 +1,158 @@
 # Laravel Countries
 
-Laravel Countries is a bundle for Laravel, providing Almost ISO 3166_2, 3166_3, currency, Capital and more for all countries.
+[![Tests](https://github.com/FLAIRUK/laravel-countries/actions/workflows/tests.yml/badge.svg)](https://github.com/FLAIRUK/laravel-countries/actions/workflows/tests.yml)
+[![Latest Stable Version](https://poser.pugx.org/flairuk/laravel-countries/v/stable)](https://packagist.org/packages/flairuk/laravel-countries)
+[![License](https://poser.pugx.org/flairuk/laravel-countries/license)](https://packagist.org/packages/flairuk/laravel-countries)
 
-**Please note that Laravel 5 only, older versions of Laravel should use version 1.3.4 instead**
+All 249 ISO 3166 countries for Laravel 12 and 13. Each country includes:
+
+- alpha-2, alpha-3 and numeric codes
+- currency (ISO 4217 code, symbol, sub-unit, decimals)
+- international calling code
+- capital and citizenship
+- UN M49 region and sub-region
+- EEA membership
+- flags, as emoji and as bundled PNGs
+
+What the package provides:
+
+- **No database required.** Look countries up through a facade backed by an in-memory dataset.
+- **Typed results.** Every lookup returns readonly `Country` objects in Laravel collections keyed by alpha-2 code.
+- **Validation rule.** `CountryCode` accepts alpha-2, alpha-3 and/or numeric codes.
+- **Optional table.** Publish a migration and seed a `countries` table when other tables need to reference countries.
 
 ## Installation
 
-Add `FLAIRUK/laravel-countries` to `composer.json`.
+```bash
+composer require flairuk/laravel-countries
+```
 
-    "FLAIRUK/laravel-countries": "dev-master"
+Laravel discovers the service provider and the `Countries` facade automatically.
 
-Run `composer update` to pull down the latest version of Country List.
+## Usage
 
-## Model
+```php
+use FLAIRUK\Countries\Facades\Countries;
 
-You can start by publishing the configuration. This is an optional step, it contains the table name and does not need to be altered. If the default name `countries` suits you, leave it. Otherwise run the following command
+$uk = Countries::find('GB');     // also 'gbr', '826' or 826
+$uk->name;                       // "United Kingdom"
+$uk->iso3;                       // "GBR"
+$uk->currencyCode;               // "GBP"
+$uk->currencySymbol;             // "£"
+$uk->dialCode();                 // "+44"
+$uk->flagEmoji();                // "🇬🇧"
+$uk->flagUrl();                  // "https://app.test/vendor/countries/flags/GB.png"
 
-    $ php artisan vendor:publish
+Countries::findOrFail('XX');     // throws ItemNotFoundException
+Countries::findByName('France');
+Countries::exists('DEU');        // true
 
-Next generate the migration file:
+Countries::all();                // Collection<string, Country> keyed by alpha-2
+Countries::eea();                // the 30 EEA members
+Countries::usingCurrency('EUR');
+Countries::withCallingCode('+1');
+Countries::inRegion('150');      // UN M49 region (Europe) or sub-region ('154' = Northern Europe)
+Countries::search('kingdom');    // name, full name or exact code
+Countries::currencies();         // ['AED', 'AFN', ...]
+```
 
-    $ php artisan countries:migration
+### Select options
 
-It will generate the `<timestamp>_setup_countries_table.php` migration and the `CountriesSeeder.php` seeder. To make sure the data is seeded insert the following code in the `seeds/DatabaseSeeder.php`
+```php
+Countries::options();                    // ['AF' => 'Afghanistan', ...] sorted by name
+Countries::options('iso3');              // ['AFG' => 'Afghanistan', ...]
+Countries::options('iso2', 'citizenship');
+```
 
-    //Seed the countries
-    $this->call('CountriesSeeder');
-    $this->command->info('Seeded the countries!');
+### Validation
 
-You may now run it with the artisan migrate command:
+```php
+use FLAIRUK\Countries\Rules\CountryCode;
 
-    $ php artisan migrate --seed
+$request->validate([
+    'country' => ['required', new CountryCode],          // alpha-2 (default)
+    'nationality' => ['required', CountryCode::alpha3()],
+    'origin' => ['required', CountryCode::any()],        // alpha-2, alpha-3 or numeric
+]);
+```
 
-After running this command the filled countries table will be available
+### Flags
+
+`flagEmoji()` works everywhere and needs no assets. To use the PNG flags (30×20), publish them to `public/vendor/countries/flags`:
+
+```bash
+php artisan vendor:publish --tag=countries-flags
+```
+
+`flagUrl()` returns `null` for the few newer territories without a bundled image: AX, BL, BQ, CW, GG, IM, JE, MF, RS, SS and SX.
+
+## Database table (optional)
+
+```bash
+php artisan countries:install         # publish config + migration, then migrate and seed
+php artisan countries:seed            # insert / update (safe to re-run)
+php artisan countries:seed --prune    # also delete rows no longer in the dataset
+```
+
+You can also call the seeder from your own `DatabaseSeeder`:
+
+```php
+$this->call(\FLAIRUK\Countries\Database\CountriesSeeder::class);
+```
+
+Query the table through the bundled Eloquent model:
+
+```php
+use FLAIRUK\Countries\Models\Country;
+
+Country::code('GB')->first();       // alpha-2 or alpha-3
+Country::eea()->orderBy('name')->get();
+Country::usingCurrency('EUR')->pluck('name');
+```
+
+The table name and connection come from `COUNTRIES_TABLE` and `COUNTRIES_DB_CONNECTION`, or from the published config. The primary key `id` is the ISO 3166 numeric code.
+
+## Upgrading from 1.x / dev-master
+
+Version 2 is a rewrite. Breaking changes:
+
+| 1.x | 2.x |
+| --- | --- |
+| Facade `FLAIRUK\Countries\CountriesFacade` | `FLAIRUK\Countries\Facades\Countries` |
+| `Countries::getList($sort)` (array) | `Countries::all()->sortBy($sort)` (Collection of `Country`) |
+| `Countries::getOne($id)` | `Countries::find($id)` (numeric code) |
+| `Countries::getListForSelect()` | `Countries::options()` |
+| `php artisan countries:migration` | `php artisan countries:install` / `countries:seed` |
+| Config key `countries.table_name` | `countries.table` |
+| Keys `country-code`, `region-code`, `sub-region-code` | `numeric_code`, `region_code`, `sub_region_code` |
+| Column `country_code` | `numeric_code` |
+| Column `flag` (`"GB.png"`) | removed. Use `flagUrl()` / `flagEmoji()` |
+| Flags in `src/flags` | `resources/flags`, publishable with `--tag=countries-flags` |
+
+Row `id`s are unchanged. If you have an existing table, rename the column before re-seeding:
+
+```php
+Schema::table('countries', function (Blueprint $table) {
+    $table->renameColumn('country_code', 'numeric_code');
+    $table->dropColumn('flag');
+});
+```
+
+### Data corrections in 2.0
+
+- **EEA membership:** the United Kingdom has left (Brexit). Iceland, Liechtenstein and Norway have been added. The list now has 30 members.
+- **Euro adoption:** Croatia (2023) and Bulgaria (2026) now use the euro. Euro symbols are fixed for Estonia, Latvia, Lithuania, Malta, Slovakia, Cyprus, Åland, Saint Barthélemy and Saint Martin.
+- **Re-denominated currencies:** BYR → BYN, MRO → MRU, STD → STN, SLL → SLE, VEF → VES, ZWL → ZWG.
+- **Sterling issues:** Guernsey, Jersey and the Isle of Man use the ISO code `GBP`. Their old codes (GGP, JEP, IMP) are not ISO 4217 codes.
+- **Names:** Eswatini, North Macedonia, Czechia, Türkiye and Cabo Verde.
+- **Formatting:** whitespace is trimmed and empty values are `null`.
+
+## Testing
+
+```bash
+composer test
+```
+
+## License
+
+MIT. See [LICENSE](LICENSE).
